@@ -1,0 +1,79 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+
+data = {
+    'Age': [22, 25, 47, 52, 46, 56, 23, 40, 60, 48],
+    'EstimatedSalary': [15000, 29000, 48000, 60000, 52000, 75000, 20000, 40000, 80000, 54000],
+    'Purchased': [0, 0, 1, 1, 1, 1, 0, 0, 1, 1]
+}
+
+df = pd.DataFrame(data)
+df
+
+
+
+
+
+
+X = df[['Age', 'EstimatedSalary']]
+y = df['Purchased']
+
+
+
+
+
+
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=0
+)
+
+
+
+
+
+from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+
+
+
+
+y_pred = model.predict(X_test)
+y_pred
+
+
+
+
+
+
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score
+
+# Fix confusion matrix
+cm = confusion_matrix(y_test, y_pred, labels=[0, 1])
+print("Confusion Matrix:\n", cm)
+
+# Extract values safely
+TN, FP, FN, TP = cm.ravel()
+
+print("TP:", TP)
+print("TN:", TN)
+print("FP:", FP)
+print("FN:", FN)
+
+# Metrics (avoid division error)
+accuracy = accuracy_score(y_test, y_pred)
+precision = precision_score(y_test, y_pred, zero_division=0)
+recall = recall_score(y_test, y_pred, zero_division=0)
+error_rate = 1 - accuracy
+
+print("Accuracy:", accuracy)
+print("Error Rate:", error_rate)
+print("Precision:", precision)
+print("Recall:", recall)

@@ -1,0 +1,36 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+
+
+dataset = sns.load_dataset('iris')
+dataset.head()
+
+
+
+
+dataset.info()
+
+
+
+
+
+
+
+
+dataset.hist(figsize=(10,8))
+plt.show()
+
+
+
+
+
+
+
+plt.figure(figsize=(10,6))
+sns.boxplot(data=dataset)
+plt.title("Boxplot of Iris Features")
+plt.show()

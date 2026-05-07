@@ -1,0 +1,145 @@
+import pandas as pd
+import numpy as np
+from sklearn.datasets import load_iris
+
+# Load dataset
+iris = load_iris()
+
+# Create DataFrame
+df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
+
+# Add species column
+df['species'] = iris.target
+
+df.head()
+
+
+
+
+
+# Mean
+print("Mean:\n", df.mean(numeric_only=True))
+
+# Median
+print("\nMedian:\n", df.median(numeric_only=True))
+
+# Minimum
+print("\nMinimum:\n", df.min(numeric_only=True))
+
+# Maximum
+print("\nMaximum:\n", df.max(numeric_only=True))
+
+# Standard Deviation
+print("\nStandard Deviation:\n", df.std(numeric_only=True))
+
+
+
+
+
+
+df.describe()
+
+
+
+
+
+# Group by species and calculate mean
+df.groupby('species').mean()
+
+
+
+
+
+
+# Group by and calculate multiple statistics
+df.groupby('species').agg(['mean', 'median', 'min', 'max', 'std'])
+
+
+
+
+
+
+
+
+
+from sklearn.preprocessing import LabelEncoder
+
+le = LabelEncoder()
+
+# Convert species to string first (for proper demo)
+df['species_str'] = df['species'].astype(str)
+
+# Apply label encoding
+df['species_encoded'] = le.fit_transform(df['species_str'])
+
+df.head()
+
+
+
+
+# One-hot encoding
+df_onehot = pd.get_dummies(df, columns=['species'])
+
+df_onehot.head()
+
+
+
+
+
+
+
+# Separate data for each species
+setosa = df[df['species'] == 0]
+versicolor = df[df['species'] == 1]
+virginica = df[df['species'] == 2]
+
+print("Setosa:\n", setosa.head())
+print("\nVersicolor:\n", versicolor.head())
+print("\nVirginica:\n", virginica.head())
+
+
+
+
+
+
+
+# Statistics for each species
+
+print("Setosa Stats:\n", setosa.describe())
+print("\nVersicolor Stats:\n", versicolor.describe())
+print("\nVirginica Stats:\n", virginica.describe())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+print("Setosa Percentiles:\n", setosa.quantile([0.25, 0.5, 0.75], numeric_only=True))
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,159 @@
+import pandas as pd
+import numpy as np
+
+# Create dataset
+data = {
+    'math score': np.random.randint(60, 80, 30),
+    'reading score': np.random.randint(75, 95, 30),
+    'writing score': np.random.randint(60, 80, 30),
+    'placement score': np.random.randint(75, 100, 30),
+    'club join year': np.random.randint(2018, 2022, 30)
+}
+
+df = pd.DataFrame(data)
+
+# Create placement offer count based on placement score
+df['placement offer count'] = np.where(df['placement score'] > 85, 3,
+                              np.where(df['placement score'] > 75, 2, 1))
+
+# Show dataset
+df.head()
+
+
+
+# Add missing values randomly
+df.loc[5, 'math score'] = np.nan
+df.loc[10, 'reading score'] = np.nan
+df.loc[15, 'writing score'] = np.nan
+
+# Add inconsistencies (out of range values)
+df.loc[2, 'math score'] = 120   # should be 60-80
+df.loc[7, 'placement score'] = 30  # should be 75-100
+
+# Show dataset
+df.head(15)
+
+
+
+
+
+
+# Check missing values (True = missing)
+print(df.isnull())
+
+# Check column-wise missing values
+print("\nMissing values count:\n")
+print(df.isnull().sum())
+
+
+
+
+
+print(df.notnull())
+
+
+
+
+
+
+# Fill missing values with mean
+df['math score'].fillna(df['math score'].mean(), inplace=True)
+df['reading score'].fillna(df['reading score'].mean(), inplace=True)
+df['writing score'].fillna(df['writing score'].mean(), inplace=True)
+
+df.head(15)
+
+
+
+
+# Drop rows with any missing value
+df_drop = df.dropna()
+
+df_drop.head()
+
+
+
+# Replace any remaining NaN with -99
+df_replace = df.replace(np.nan, -99)
+
+df_replace.head()
+
+
+
+
+
+
+import matplotlib.pyplot as plt
+
+# Draw boxplot
+cols = ['math score', 'reading score', 'writing score', 'placement score']
+df.boxplot(cols)
+
+plt.show()
+
+
+
+
+
+import numpy as np
+
+# Find outliers (example conditions)
+print("Math score outliers:", np.where(df['math score'] > 100))
+print("Placement score outliers:", np.where(df['placement score'] < 50))
+
+
+
+
+
+
+
+# Remove outliers (example: math score > 100)
+df_clean = df[df['math score'] <= 100]
+
+df_clean.head()
+
+
+
+# Cap math score at 90th percentile
+upper_limit = np.percentile(df['math score'], 90)
+
+df['math score'] = np.where(df['math score'] > upper_limit,
+                           upper_limit,
+                           df['math score'])
+
+df.head()
+
+
+
+
+# Convert join year to duration (assume current year = 2026)
+df['duration'] = 2026 - df['club join year']
+
+df.head()
+
+
+
+
+
+
+# Apply log transformation on math score
+df['log_math'] = np.log10(df['math score'])
+
+df.head()
+
+
+
+# Before transformation
+df['math score'].plot(kind='hist', title='Before Transformation')
+plt.show()
+
+# After transformation
+df['log_math'].plot(kind='hist', title='After Transformation')
+plt.show()
+
+
+
+
+
+
+

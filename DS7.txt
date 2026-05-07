@@ -1,0 +1,164 @@
+import nltk
+
+# Download required resources
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('averaged_perceptron_tagger')
+
+
+
+
+
+
+
+from nltk.tokenize import word_tokenize, sent_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer, WordNetLemmatizer
+from nltk import pos_tag
+
+
+
+
+
+
+
+import nltk
+nltk.download('punkt')
+nltk.download('punkt_tab')
+
+
+
+
+
+# Sample text
+text = "Data Science is an amazing field. It includes machine learning and AI."
+
+# Sentence Tokenization
+sentences = sent_tokenize(text)
+print("Sentences:\n", sentences)
+
+# Word Tokenization
+words = word_tokenize(text)
+print("\nWords:\n", words)
+
+
+
+
+
+
+
+
+
+
+
+import string
+
+# Get stopwords
+stop_words = set(stopwords.words('english'))
+
+# Remove stopwords and punctuation
+filtered_words = [
+    word for word in words
+    if word.lower() not in stop_words and word not in string.punctuation
+]
+
+print("Filtered Words:\n", filtered_words)
+
+
+
+
+
+
+
+# Stemming
+stemmer = PorterStemmer()
+
+stemmed_words = [stemmer.stem(word) for word in filtered_words]
+
+print("Stemmed Words:\n", stemmed_words)
+
+
+
+
+
+
+
+
+# Lemmatization
+lemmatizer = WordNetLemmatizer()
+
+lemmatized_words = [lemmatizer.lemmatize(word) for word in filtered_words]
+
+print("Lemmatized Words:\n", lemmatized_words)
+
+
+
+
+
+
+
+
+import nltk
+nltk.download('averaged_perceptron_tagger')
+nltk.download('averaged_perceptron_tagger_eng')
+
+
+
+
+
+
+
+
+
+pos_tags = pos_tag(filtered_words)
+print("POS Tags:\n", pos_tags)
+
+
+
+
+
+
+
+import pandas as pd
+
+
+
+
+
+
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Sample documents
+documents = [
+    "Data Science is an amazing field",
+    "Machine learning is a part of Data Science"
+]
+
+# Create TF-IDF model
+vectorizer = TfidfVectorizer()
+
+# Fit and transform
+tfidf_matrix = vectorizer.fit_transform(documents)
+
+# Convert to DataFrame
+tfidf_df = pd.DataFrame(tfidf_matrix.toarray(),
+                        columns=vectorizer.get_feature_names_out())
+
+tfidf_df
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

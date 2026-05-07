@@ -1,0 +1,116 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from sklearn.datasets import load_iris
+
+# Load dataset
+iris = load_iris()
+
+# Convert to DataFrame
+df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
+
+# Add target column
+df['species'] = iris.target
+
+# Show first 5 rows
+df.head()
+
+
+
+# First 5 rows
+print("First 5 rows:\n", df.head())
+
+# Shape of dataset
+print("\nShape of dataset:", df.shape)
+
+# Column names
+print("\nColumns:", df.columns)
+
+# Data types
+print("\nData Types:\n", df.dtypes)
+
+
+
+# Check missing values (True/False)
+print("Missing values (True means missing):\n")
+print(df.isnull())
+
+# Check if any column has missing values
+print("\nAny missing values in columns:\n")
+print(df.isnull().any())
+
+# Count missing values in each column
+print("\nCount of missing values:\n")
+print(df.isnull().sum())
+
+# Statistical summary
+print("\nStatistical Summary:\n")
+print(df.describe())
+
+
+
+# Check data types
+print("Data Types:\n")
+print(df.dtypes)
+
+
+
+
+
+
+
+from sklearn.preprocessing import MinMaxScaler
+
+# Create scaler object
+scaler = MinMaxScaler()
+
+# Select only feature columns (exclude species)
+features = df.drop('species', axis=1)
+
+# Apply normalization
+scaled_features = scaler.fit_transform(features)
+
+# Convert back to DataFrame
+df_scaled = pd.DataFrame(scaled_features, columns=features.columns)
+
+# Add species column back
+df_scaled['species'] = df['species']
+
+# Show first 5 rows
+df_scaled.head()
+
+
+
+
+
+
+from sklearn.preprocessing import LabelEncoder
+
+# Create encoder
+le = LabelEncoder()
+
+# Apply encoding (just for demonstration)
+df['species_encoded'] = le.fit_transform(df['species'])
+
+# Show unique values
+print(df[['species', 'species_encoded']].head())
+
+
+
+
+
+# One-hot encoding using pandas
+df_onehot = pd.get_dummies(df, columns=['species'])
+
+# Show first 5 rows
+df_onehot.head()
+
+
+
+
+
+
+
+

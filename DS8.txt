@@ -1,0 +1,146 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load dataset
+dataset = sns.load_dataset('titanic')
+
+# Show first 5 rows
+dataset.head()
+
+
+
+
+# Histogram of age
+sns.histplot(dataset['age'], bins=10, kde=False)
+
+plt.title("Age Distribution")
+plt.show()
+
+
+
+
+
+
+
+# Joint plot (scatter)
+sns.jointplot(x='age', y='fare', data=dataset, kind='scatter')
+
+
+
+
+
+
+
+
+sns.jointplot(x='age', y='fare', data=dataset, kind='hex')
+
+
+
+
+
+# Bar plot
+sns.barplot(x='sex', y='age', data=dataset)
+
+plt.title("Average Age by Gender")
+plt.show()
+
+
+
+
+
+sns.barplot(x='sex', y='age', data=dataset, estimator=np.std)
+
+plt.title("Age Variation by Gender")
+plt.show()
+
+
+
+
+
+
+
+
+# Count plot for gender
+sns.countplot(x='sex', data=dataset)
+
+plt.title("Count of Passengers by Gender")
+plt.show()
+
+
+
+
+
+
+
+
+
+sns.countplot(x='survived', data=dataset)
+
+plt.title("Survival Count")
+plt.show()
+
+
+
+
+
+
+
+
+
+# Box plot (age vs gender)
+sns.boxplot(x='sex', y='age', data=dataset)
+
+plt.title("Age Distribution by Gender")
+plt.show()
+
+
+
+
+
+
+sns.boxplot(x='sex', y='age', data=dataset, hue='survived')
+
+plt.title("Age Distribution by Gender & Survival")
+plt.show()
+
+
+
+
+
+
+
+
+
+# Correlation matrix
+corr = dataset.corr(numeric_only=True)
+
+# Heatmap
+sns.heatmap(corr, annot=True)
+
+plt.title("Correlation Heatmap")
+plt.show()
+
+
+
+
+
+
+
+
+
+# Histogram of fare
+sns.histplot(dataset['fare'], bins=10, kde=False)
+
+plt.title("Fare Distribution")
+plt.xlabel("Fare")
+plt.ylabel("Count")
+plt.show()
+
+
+
+
+
+
+
